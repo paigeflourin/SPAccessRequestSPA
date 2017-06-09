@@ -29,7 +29,7 @@ export class EmployeeAddComponent implements IEmployee {
             Id: 0,
             Title: '',
             EmployeeEmail: '',
-            RequestDate: new Date()
+            RequestDate: new Date().toLocaleDateString()
         }
     }
 
