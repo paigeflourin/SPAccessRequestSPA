@@ -1,2 +1,2 @@
-# Angular2-SharePoint-SPA
-SharePoint Online Single Page App With Angular2 and Webpack
+# Add user to SharePoint Online security group with SPA
+Sample SharePoint Online SPA using Angular 2 and Webpack
