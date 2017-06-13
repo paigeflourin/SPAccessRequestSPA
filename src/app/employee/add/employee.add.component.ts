@@ -29,17 +29,25 @@ export class EmployeeAddComponent implements IEmployee {
             Id: 0,
             Title: '',
             EmployeeEmail: '',
-            RequestDate: new Date().toLocaleDateString()
+            RequestDate: new Date()
         }
     }
 
     saveChanges() {
         this.loading = "init";
+        
         new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.add({
             Title: this.Employee.Title,
             EmployeeEmail: this.Employee.EmployeeEmail,
             RequestDate: this.Employee.RequestDate
-        }).then((result) => {
+        }).then((result : any) => {
+
+            var user = {'AccountName': "i:0#.f|membership|" + this.Employee.EmployeeEmail + ""};
+            var groupId = 4808;
+            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).siteGroups.getById(groupId)
+            .users
+            .add(user.AccountName)
+
             this.newEmployee = this.Employee.Title;
             this.itemAdded = true;
             setTimeout(function () {
@@ -48,7 +56,14 @@ export class EmployeeAddComponent implements IEmployee {
             this.reset();
             this.loading = "done";
             console.log('ok');
-        }).catch((e) => { this.loading = "error"; });
+            this.router.navigateByUrl('/home');
+        }).catch((e: any) => { this.loading = "error"; });
+    }
+
+    addToGroup(emp:any) {
+       
+
+
     }
 
 

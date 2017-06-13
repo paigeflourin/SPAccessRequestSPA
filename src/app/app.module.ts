@@ -11,6 +11,7 @@ import { AppSettings } from './shared/app.settings';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { EmployeeAddComponent } from './employee/add/employee.add.component';
+import { EmployeeViewComponent } from './employee/view/employee.view.component';
 import { AppLoadingComponent } from './shared/components/loading/app.loading';
 import { AppNotifyComponent } from './shared/components/notify/app.notify';
 
@@ -19,6 +20,7 @@ import { AppNotifyComponent } from './shared/components/notify/app.notify';
         AppComponent,
         HomeComponent,
         EmployeeAddComponent,
+        EmployeeViewComponent,
         AppLoadingComponent,
         AppNotifyComponent
     ],

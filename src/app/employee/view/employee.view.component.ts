@@ -7,12 +7,13 @@ import { IEmployeeEntity } from '../../shared/app.entities';
 import { AppLoadingComponent } from '../../shared/components/loading/app.loading';
 
 import * as sp from "sp-pnp-js";
-
+var moment = require('moment');
+//import * as moment from 'moment';
 @Component({
     templateUrl: '../employee.component.html',
 
 })
-export class EmployeeEditComponent implements IEmployee {
+export class EmployeeViewComponent implements IEmployee {
     private Id: string;
     @Input()
     Employee: IEmployeeEntity = null;
@@ -29,11 +30,14 @@ export class EmployeeEditComponent implements IEmployee {
     ngOnInit() {
         this.activeRoute.params.subscribe(params => {
             this.Id = params['id'];
-            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(+this.Id).get().then((result) => {
+            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(+this.Id).get().then((result: any) => {
+
                 this.Employee = result;
+                this.Employee.RequestDate = moment(result.RequestDate).format('MM/DD/YYYY');
+
                 console.log(this.Employee);
                 this.loading = "done";
-            }).catch((e) => { this.loading = "error"; });;
+            }).catch((e : any) => { this.loading = "error"; });;
         });
     }
 
@@ -44,7 +48,7 @@ export class EmployeeEditComponent implements IEmployee {
             new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(+this.Id).delete().then(() => {
                 this.loading = "done";
                 this.router.navigateByUrl('/home');
-            }).catch((e) => { this.loading = "error"; });
+            }).catch((e: any) => { this.loading = "error"; });
 
         } else {
             console.log('no');
@@ -57,10 +61,10 @@ export class EmployeeEditComponent implements IEmployee {
             Title: this.Employee.Title,
             EmployeeEmail: this.Employee.EmployeeEmail,
             RequestDate: this.Employee.RequestDate
-        }).then((result) => {
+        }).then((result: any) => {
             console.log('Record Updated');
             this.loading = "done";
             this.router.navigateByUrl('/home');
-        }).catch((e) => { this.loading = "error"; });
+        }).catch((e: any) => { this.loading = "error"; });
     }
 }
