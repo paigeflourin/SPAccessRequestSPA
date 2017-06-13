@@ -35,7 +35,7 @@ export class EmployeeAddComponent implements IEmployee {
 
     saveChanges() {
         this.loading = "init";
-        new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle("FCO Access Request").items.add({
+        new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.add({
             Title: this.Employee.Title,
             EmployeeEmail: this.Employee.EmployeeEmail,
             RequestDate: this.Employee.RequestDate

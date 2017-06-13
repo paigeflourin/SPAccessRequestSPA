@@ -29,7 +29,7 @@ export class EmployeeEditComponent implements IEmployee {
     ngOnInit() {
         this.activeRoute.params.subscribe(params => {
             this.Id = params['id'];
-            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle("Employee").items.getById(+this.Id).get().then((result) => {
+            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(+this.Id).get().then((result) => {
                 this.Employee = result;
                 console.log(this.Employee);
                 this.loading = "done";
@@ -41,7 +41,7 @@ export class EmployeeEditComponent implements IEmployee {
         event.preventDefault();
         if (confirm('Do you wish to delete this record ?')) {
             this.loading = "init";
-            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle("Employee").items.getById(+this.Id).delete().then(() => {
+            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(+this.Id).delete().then(() => {
                 this.loading = "done";
                 this.router.navigateByUrl('/home');
             }).catch((e) => { this.loading = "error"; });
@@ -53,11 +53,10 @@ export class EmployeeEditComponent implements IEmployee {
 
     saveChanges() {
         this.loading = "init";
-        new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle("Employee").items.getById(this.Employee.Id).update({
+        new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(this.Employee.Id).update({
             Title: this.Employee.Title,
-            Location: this.Employee.Location,
-            Designation: this.Employee.Designation,
-            Email: this.Employee.Email
+            EmployeeEmail: this.Employee.EmployeeEmail,
+            RequestDate: this.Employee.RequestDate
         }).then((result) => {
             console.log('Record Updated');
             this.loading = "done";

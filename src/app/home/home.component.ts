@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     constructor(private appSettings: AppSettings) { }
 
     ngOnInit() {
-        new pnp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('Employee').items.get().then((result: any) => {
+        new pnp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.get().then((result: any) => {
             this.Employees = result;
             this.loading = "done";
         }).catch((e) => { this.loading = "error"; });
