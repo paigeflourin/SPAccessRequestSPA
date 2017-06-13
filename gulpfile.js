@@ -5,7 +5,7 @@ var replace = require('gulp-replace');
 
 gulp.task('changeBase', function(){
   gulp.src(['./dist/index.aspx'])
-    .pipe(replace('<base href="/">', '<base href="/sites/spa/SitePages/ng2/index.aspx">'))
+    .pipe(replace('<base href="/teams/Groups/Technology/BPT/PageYammer/SitePages/ng2/index.aspx">'))
     .pipe(gulp.dest('./dist'));
 });
 
