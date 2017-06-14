@@ -37,7 +37,7 @@
                     </div>
                     <div class="ms-TextField  ">
                         <label class="ms-Label">RequestDate</label>
-                        <input class="ms-input" type="date" [(ngModel)]="Employee.RequestDate" placeholder="">
+                        <input class="ms-input" type="text" [(ngModel)]="Employee.RequestDate" placeholder="" readonly>
                     </div>
                     <div style="padding-top:20px">
                         <button (click)="saveChanges();" class="ms-Button ms-Button--primary">
@@ -65,7 +65,7 @@
                     </div>
                     <div class="ms-TextField  ">
                         <label class="ms-Label">RequestDate</label>
-                        <input class="ms-input" type="date" [(ngModel)]="Employee.RequestDate" placeholder="" readonly>
+                        <input class="ms-input" type="text" [(ngModel)]="Employee.RequestDate" placeholder="" readonly>
                     </div>
                     <div style="padding-top:20px">
                         <button class="ms-Button" [routerLink]="['/home']">

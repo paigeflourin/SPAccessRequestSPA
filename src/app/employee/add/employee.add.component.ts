@@ -7,7 +7,7 @@ import { IEmployee } from '../../shared/app.interfaces';
 import { AppLoadingComponent } from '../../shared/components/loading/app.loading';
 
 import * as sp from "sp-pnp-js";
-
+import * as moment from "moment";
 @Component({
     templateUrl: '../employee.component.html',
 })
@@ -29,7 +29,7 @@ export class EmployeeAddComponent implements IEmployee {
             Id: 0,
             Title: '',
             EmployeeEmail: '',
-            RequestDate: new Date()
+            RequestDate: moment(new Date()).format('MM/DD/YYYY')
         }
     }
 
