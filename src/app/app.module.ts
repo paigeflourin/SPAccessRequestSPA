@@ -14,6 +14,9 @@ import { EmployeeAddComponent } from './employee/add/employee.add.component';
 import { EmployeeViewComponent } from './employee/view/employee.view.component';
 import { AppLoadingComponent } from './shared/components/loading/app.loading';
 import { AppNotifyComponent } from './shared/components/notify/app.notify';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToasterModule, ToasterService} from 'angular2-toaster';
 
 @NgModule({
     declarations: [
@@ -32,7 +35,10 @@ import { AppNotifyComponent } from './shared/components/notify/app.notify';
         BrowserModule,
         RouterModule.forRoot(RouterConfig),
         HttpModule,
-        FormsModule
+        FormsModule,
+        ToasterModule,
+        BrowserAnimationsModule,
+        ToastModule.forRoot()
     ],
     bootstrap: [AppComponent]
 })

@@ -20,6 +20,9 @@
 	<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/5.0.1/css/fabric.min.css">
 	<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.components.min.css">
 	<link rel="stylesheet" href="./static/app.styles.css">
+    <link rel="stylesheet" type="text/css" href="./static/toaster.css" />
+
+
 	<SharePoint:ScriptBlock runat="server">
 		var navBarHelpOverrideKey = "WSSEndUser";
 	</SharePoint:ScriptBlock>

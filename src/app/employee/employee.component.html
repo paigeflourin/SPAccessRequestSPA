@@ -15,9 +15,11 @@
         <div *ngSwitchCase="'init'">
             <app-loading></app-loading>
         </div>
+        <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
         <div *ngSwitchCase="'error'">
             <div class="app-loading">
                 <app-notify msgText="Unable to connect the back-end services !!!"></app-notify>
+                  <a href="#" (click)="back();" class="ms-fontColor-orange"> <i class="ms-Icon ms-Icon--chevronThickDown" aria-hidden="true"></i></a>   
             </div>
         </div>
 
@@ -37,7 +39,7 @@
                     </div>
                     <div class="ms-TextField  ">
                         <label class="ms-Label">RequestDate</label>
-                        <input class="ms-input" type="text" [(ngModel)]="Employee.RequestDate" placeholder="" readonly>
+                        <input class="ms-input" type="date" [(ngModel)]="Employee.RequestDate" placeholder="">
                     </div>
                     <div style="padding-top:20px">
                         <button (click)="saveChanges();" class="ms-Button ms-Button--primary">
