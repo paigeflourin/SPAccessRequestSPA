@@ -23,11 +23,12 @@ export class EmployeeAddComponent implements IEmployee {
     newEmployee: string = "";
     private toasterService: ToasterService;
 
-    public toasterconfig : ToasterConfig = new ToasterConfig({timeout: 2000});
-
+    public toasterconfig : ToasterConfig = new ToasterConfig({timeout: 5000});
+    dateNow: string;
     constructor(private appSettings: AppSettings, private router: Router, toasterService: ToasterService ) { //public toastr : ToastsManager, vcr: ViewContainerRef
            // this.toastr.setRootViewContainerRef(vcr);
            this.toasterService = toasterService;
+           this.dateNow= new Date().toLocaleDateString();//.toISOString().slice(0,16);
      }
 
     ngOnInit() {
@@ -39,7 +40,7 @@ export class EmployeeAddComponent implements IEmployee {
             Id: 0,
             Title: '',
             EmployeeEmail: '',
-            RequestDate: moment(new Date()).format('yyyy-MM-dd')
+            RequestDate: moment(new Date()).format('MM/dd/YYYY')
         }
     }
 
@@ -51,7 +52,7 @@ export class EmployeeAddComponent implements IEmployee {
         new sp.Web(AppSettings.SHAREPOINT_SITE_URL).siteGroups.getById(groupId)
             .users
             .add(user.AccountName).then((result : any) => {
-                //this.toastr.success('Added User to Free Copy Orders Group', 'Success!');
+             
                 this.toasterService.pop('success', 'Success', 'Added User to Free Copy Orders Group');
                 new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.add({
                     Title: this.Employee.Title,
@@ -65,7 +66,7 @@ export class EmployeeAddComponent implements IEmployee {
                         this.itemAdded = false;
                     }.bind(this), 3000);
                     this.reset();
-                    //this.toastr.success('Added User to Free Copy Orders Group', 'Success!');
+          
                     this.toasterService.pop('success', 'List Item Created', 'Success');
                     this.loading = "done";
                     console.log("ok");
@@ -79,14 +80,10 @@ export class EmployeeAddComponent implements IEmployee {
             }).catch((e : any) => { 
                 console.log(e);
                 this.loading = "done";
-                //this.toastr.error('Error in providing access to user', 'Error!');
                 this.toasterService.pop('error', 'Error', 'Error in providing access to user');
                 console.log('not okay');
                 //this.router.navigateByUrl('/home');
             });
-
-
-        
     }
 
     back() {
