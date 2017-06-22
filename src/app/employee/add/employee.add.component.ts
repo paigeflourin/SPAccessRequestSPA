@@ -28,7 +28,7 @@ export class EmployeeAddComponent implements IEmployee {
     constructor(private appSettings: AppSettings, private router: Router, toasterService: ToasterService ) { //public toastr : ToastsManager, vcr: ViewContainerRef
            // this.toastr.setRootViewContainerRef(vcr);
            this.toasterService = toasterService;
-           this.dateNow= new Date().toLocaleDateString();//.toISOString().slice(0,16);
+           //this.dateNow= new Date().toISOString().slice(0,16);//.toLocaleDateString();//.toISOString().slice(0,16);
      }
 
     ngOnInit() {
@@ -40,7 +40,7 @@ export class EmployeeAddComponent implements IEmployee {
             Id: 0,
             Title: '',
             EmployeeEmail: '',
-            RequestDate: moment(new Date()).format('MM/dd/YYYY')
+            RequestDate: moment(new Date()).format('DD/MM/YYYY')
         }
     }
 
@@ -49,11 +49,15 @@ export class EmployeeAddComponent implements IEmployee {
         var user = {'AccountName': "i:0#.f|membership|" + this.Employee.EmployeeEmail + ""};
         var groupId = 4808;
 
+        console.log(this.Employee); 
+        
+
         new sp.Web(AppSettings.SHAREPOINT_SITE_URL).siteGroups.getById(groupId)
             .users
             .add(user.AccountName).then((result : any) => {
              
                 this.toasterService.pop('success', 'Success', 'Added User to Free Copy Orders Group');
+                
                 new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.add({
                     Title: this.Employee.Title,
                     EmployeeEmail: this.Employee.EmployeeEmail,
@@ -77,6 +81,8 @@ export class EmployeeAddComponent implements IEmployee {
                     console.log('not okay');
                     //this.router.navigateByUrl('/home');
                 });
+
+                
             }).catch((e : any) => { 
                 console.log(e);
                 this.loading = "done";

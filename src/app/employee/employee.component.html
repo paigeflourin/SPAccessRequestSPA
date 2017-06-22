@@ -39,7 +39,7 @@
                     </div>
                     <div class="ms-TextField  ">
                         <label class="ms-Label">RequestDate</label>
-                        <input class="ms-input" type="date" [value]="dateNow"  (change)="date=$event.target.value" placeholder="">
+                        <input class="ms-input" type="date" [(ngModel)]="Employee.RequestDate" placeholder=""> <!--  (change)="date=$event.target.value" _____ [ngModel] ="dt | date:'MM/dd/yyyy'" (ngModelChange)="dt = $event" [value]="datee | date:'MM/dd/yyyy'" -->
                     </div>
                     <div style="padding-top:20px">
                         <button (click)="saveChanges();" class="ms-Button ms-Button--primary">
