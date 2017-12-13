@@ -8,6 +8,9 @@ import { AppLoadingComponent } from '../../shared/components/loading/app.loading
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import {ToasterModule, ToasterService, ToasterConfig} from 'angular2-toaster';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { EmployeeListService } from './employee.add.list.service'
 
 import * as sp from "sp-pnp-js";
 import * as moment from "moment";
@@ -15,7 +18,7 @@ import * as moment from "moment";
     templateUrl: '../employee.component.html',
 })
 export class EmployeeAddComponent implements IEmployee {
-     pageTile = "Add Employee";
+    pageTile = "Add Employee";
     pageMode = "add";
     Employee: IEmployeeEntity = null;
     loading: string = "done";
@@ -25,9 +28,25 @@ export class EmployeeAddComponent implements IEmployee {
 
     public toasterconfig : ToasterConfig = new ToasterConfig({timeout: 5000});
     dateNow: string;
-    constructor(private appSettings: AppSettings, private router: Router, toasterService: ToasterService ) { //public toastr : ToastsManager, vcr: ViewContainerRef
+
+
+   
+    selectedEmp: IEmployeeEntity = null;  
+    items: Observable<IEmployeeEntity[]>;
+    private searchTermStream = new Subject<string>();
+
+
+    search(term: string) {
+        this.searchTermStream.next(term);
+    }
+
+    constructor(private appSettings: AppSettings, private router: Router, toasterService: ToasterService, private empService: EmployeeListService ) { //public toastr : ToastsManager, vcr: ViewContainerRef
            // this.toastr.setRootViewContainerRef(vcr);
            this.toasterService = toasterService;
+           this.items = this.searchTermStream
+           .debounceTime(300)
+           .distinctUntilChanged()
+           .switchMap((term: string) => this.empService.search(term));
            //this.dateNow= new Date().toISOString().slice(0,16);//.toLocaleDateString();//.toISOString().slice(0,16);
      }
 
@@ -39,20 +58,33 @@ export class EmployeeAddComponent implements IEmployee {
         this.Employee = {
             Id: 0,
             Title: '',
-            EmployeeEmail: '',
-            RequestDate: moment(new Date()).format('DD/MM/YYYY')
+            Email: '',
+            //RequestDate: moment(new Date()).format('DD/MM/YYYY')
         }
     }
 
+    setEmployee(emp: IEmployeeEntity) {
+        console.log(emp);
+        this.selectedEmp = emp;
+        this.Employee.Email = this.selectedEmp.Email;
+        this.search(this.selectedEmp.Email);
+      }
+
+
+
     saveChanges() {
         this.loading = "init";
-        var user = {'AccountName': "i:0#.f|membership|" + this.Employee.EmployeeEmail + ""};
-        var groupId = 4808;
+        var user = {'AccountName': "i:0#.f|membership|" + this.Employee.Email + ""};
+        var groupId = 4808; //Test Group
 
         console.log(this.Employee); 
         
-
-        new sp.Web(AppSettings.SHAREPOINT_SITE_URL).siteGroups.getById(groupId)
+        //check validity of user
+        new sp.Web(AppSettings.SHAREPOINT_SITE_URL).siteUsers.getByEmail("" + this.Employee.Email +"").get().then(function(result) { 
+            console.log(result);
+            console.log("check user if valid");
+            
+            new sp.Web(AppSettings.SHAREPOINT_SITE_URL).siteGroups.getById(groupId)
             .users
             .add(user.AccountName).then((result : any) => {
              
@@ -60,7 +92,7 @@ export class EmployeeAddComponent implements IEmployee {
                 
                 new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.add({
                     Title: this.Employee.Title,
-                    EmployeeEmail: this.Employee.EmployeeEmail,
+                    EmployeeEmail: this.Employee.Email,
                     RequestDate: this.Employee.RequestDate
                 }).then((result : any) => {
 
@@ -90,6 +122,16 @@ export class EmployeeAddComponent implements IEmployee {
                 console.log('not okay');
                 //this.router.navigateByUrl('/home');
             });
+
+        }).catch((e : any) => { 
+            console.log(e);
+            this.loading = "done";
+            this.toasterService.pop('error', 'Error', 'User does not exist');
+            console.log('user not exist');
+        });
+
+
+        
     }
 
     back() {

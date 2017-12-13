@@ -1,6 +1,6 @@
 export interface IEmployeeEntity {
     Id: number;
     Title: string;
-    EmployeeEmail: string;
-    RequestDate: any;
+    Email: string;
+    //RequestDate: any;
 }

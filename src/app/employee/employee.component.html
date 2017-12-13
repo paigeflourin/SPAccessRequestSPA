@@ -35,12 +35,17 @@
                     </div>
                     <div class="ms-TextField  ">
                         <label class="ms-Label">Email</label>
-                        <input class="ms-TextField-field" type="text" [(ngModel)]="Employee.EmployeeEmail" placeholder="">
+                        <!--<input class="ms-TextField-field" type="text" [(ngModel)]="Employee.EmployeeEmail" placeholder="">-->
+                        <input type="email" #term (keyup)="search(term.value)" class="ms-TextField-field" id="empemail" name="empemail" [(ngModel)]="Employee.Email">
+                        <ul class="emp-sug-list">
+                            <li class="emp-sug-list-item" *ngFor="let item of items | async" (click)="setEmployee(item);">
+                            <a>{{item.Title}}</a></li>
+                        </ul>
                     </div>
-                    <div class="ms-TextField  ">
+                    <!--<div class="ms-TextField  ">
                         <label class="ms-Label">RequestDate</label>
-                        <input class="ms-input" type="date" [(ngModel)]="Employee.RequestDate" placeholder=""> <!--  (change)="date=$event.target.value" _____ [ngModel] ="dt | date:'MM/dd/yyyy'" (ngModelChange)="dt = $event" [value]="datee | date:'MM/dd/yyyy'" -->
-                    </div>
+                        <input class="ms-input" type="date" [(ngModel)]="Employee.RequestDate | date:'yyyy-MM-dd'" (ngModelChange)="Employee.RequestDate = $event" placeholder="" > <!--  (change)="date=$event.target.value" _____ [ngModel] ="dt | date:'MM/dd/yyyy'" (ngModelChange)="dt = $event" [value]="datee | date:'MM/dd/yyyy'" -->
+                    <!--</div>-->
                     <div style="padding-top:20px">
                         <button (click)="saveChanges();" class="ms-Button ms-Button--primary">
                             <span class="ms-Button-label">Save</span>

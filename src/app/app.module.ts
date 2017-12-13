@@ -17,6 +17,8 @@ import { AppNotifyComponent } from './shared/components/notify/app.notify';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { EmployeeListService } from './employee/add/employee.add.list.service'
+
 
 @NgModule({
     declarations: [
@@ -29,7 +31,8 @@ import {ToasterModule, ToasterService} from 'angular2-toaster';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        AppSettings
+        AppSettings,
+        EmployeeListService
     ],
     imports: [
         BrowserModule,
