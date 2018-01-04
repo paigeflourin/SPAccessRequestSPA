@@ -75,7 +75,7 @@ export class EmployeeAddComponent implements IEmployee {
     saveChanges() {
         this.loading = "init";
         var user = {'AccountName': "i:0#.f|membership|" + this.Employee.Email + ""};
-        var groupId = 4808; //Test Group
+        var groupId = 3549; //Test Free Copy Orders
 
         console.log(this.Employee); 
         

@@ -33,7 +33,7 @@ export class EmployeeViewComponent implements IEmployee {
             new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(+this.Id).get().then((result: any) => {
 
                 this.Employee = result;
-                this.Employee.RequestDate = moment(result.RequestDate).format('MM/DD/YYYY');
+               // this.Employee.RequestDate = moment(result.RequestDate).format('MM/DD/YYYY');
 
                 console.log(this.Employee);
                 this.loading = "done";
@@ -59,8 +59,8 @@ export class EmployeeViewComponent implements IEmployee {
         this.loading = "init";
         new sp.Web(AppSettings.SHAREPOINT_SITE_URL).lists.getByTitle('FCO Access Request').items.getById(this.Employee.Id).update({
             Title: this.Employee.Title,
-            EmployeeEmail: this.Employee.EmployeeEmail,
-            RequestDate: this.Employee.RequestDate
+            EmployeeEmail: this.Employee.Email,
+           // RequestDate: this.Employee.RequestDate
         }).then((result: any) => {
             console.log('Record Updated');
             this.loading = "done";

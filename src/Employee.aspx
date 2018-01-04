@@ -14,7 +14,7 @@
 	<SharePoint:AlphaImage ID=onetidtpweb1 Src="/_layouts/15/images/wiki.png?rev=44" Width=145 Height=54 Alt="" Runat="server"/>
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderAdditionalPageHead" runat="server">
-	<base href="/teams/Groups/Technology/BPT/PageYammer/SitePages/ng2/Employee.aspx">
+	<base href="/sites/IntranetDevelopment/FreeCopyOrders/SitePages/ng2/Employee.aspx">
 	<meta name="CollaborationServer" content="SharePoint Team Web Site" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/5.0.1/css/fabric.min.css">
